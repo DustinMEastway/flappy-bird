@@ -12,6 +12,9 @@ var _screen_size := Vector2(
 
 func _ready():
 	_add_background()
+	var player: Player = load('res://player.tscn').instance()
+	player.position = _screen_size / 2
+	add_child(player)
 
 func _process(delta):
 	if (Input.is_action_pressed('ui_cancel')):

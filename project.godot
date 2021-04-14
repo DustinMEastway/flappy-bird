@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "StaticBody2D",
+"base": "KinematicBody2D",
 "class": "Pipe",
 "language": "GDScript",
 "path": "res://pipe.gd"

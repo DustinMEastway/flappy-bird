@@ -13,12 +13,16 @@ var _pipe_min_height = 32
 func _ready() -> void:
 	_add_background()
 	var player: Player = load('res://player.tscn').instance()
+	player.connect('player_hit', self, "_on_player_hit")
 	player.position = GameService.screen_size / 2
 	add_child(player)
 
 func _process(delta) -> void:
 	if (Input.is_action_pressed('ui_cancel')):
 		get_tree().quit()
+
+	if (GameService.paused):
+		return
 
 	_background.position.x -= _background_speed * delta
 	_ground.position.x -= _ground_speed * delta
@@ -29,8 +33,7 @@ func _process(delta) -> void:
 		_ground.position.x += GameService.screen_size.x
 
 	for pipe in _pipes:
-		var pipe_width = pipe.get_width()
-		if (pipe.position.x < -pipe_width / 2):
+		if (pipe.position.x < -pipe.get_width() / 2):
 			_move_pipe_to_end(pipe)
 
 func _add_background() -> void:
@@ -52,9 +55,13 @@ func _add_pipes() -> void:
 	var max_pipes = 5
 	for i in range(max_pipes):
 		var pipe: Pipe = pipe_resource.instance()
+		pipe.connect('player_hit', self, "_on_player_hit")
 		_move_pipe_to_end(pipe)
 		_pipes.append(pipe)
 		add_child(pipe)
+
+func _on_player_hit() -> void:
+	GameService.paused = true
 
 func _move_pipe_to_end(pipe: Pipe) -> void:
 	var screen_size = GameService.screen_size

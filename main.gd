@@ -53,7 +53,7 @@ func _add_background() -> void:
 func _add_pipes() -> void:
 	var pipe_resource = load('res://pipe.tscn')
 	var max_pipes = 5
-	for i in range(max_pipes):
+	for _i in range(max_pipes):
 		var pipe: Pipe = pipe_resource.instance()
 		pipe.connect('player_hit', self, "_on_player_hit")
 		_move_pipe_to_end(pipe)

@@ -16,11 +16,9 @@ func _ready() -> void:
 	player.connect('player_hit', self, "_on_player_hit")
 	player.position = GameService.screen_size / 2
 	add_child(player)
+	GameService.paused = false
 
 func _process(delta) -> void:
-	if (Input.is_action_pressed('ui_cancel')):
-		get_tree().quit()
-
 	if (GameService.paused):
 		return
 

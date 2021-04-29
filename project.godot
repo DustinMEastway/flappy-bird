@@ -18,10 +18,22 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://player.gd"
+}, {
+"base": "Node",
+"class": "State",
+"language": "GDScript",
+"path": "res://state/state.gd"
+}, {
+"base": "Node",
+"class": "StateMachine",
+"language": "GDScript",
+"path": "res://state/state_machine.gd"
 } ]
 _global_script_class_icons={
 "Pipe": "",
-"Player": ""
+"Player": "",
+"State": "",
+"StateMachine": ""
 }
 
 [application]
@@ -34,6 +46,7 @@ config/icon="res://icon.png"
 
 GameService="*res://services/game_service.gd"
 RandomService="*res://services/random_service.gd"
+SceneStateMachine="*res://state/scene/state_machine.gd"
 
 [display]
 

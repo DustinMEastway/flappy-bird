@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Button",
+"class": "ActionButton",
+"language": "GDScript",
+"path": "res://controls/action_button.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Pipe",
 "language": "GDScript",
@@ -30,6 +35,7 @@ _global_script_classes=[ {
 "path": "res://state/state_machine.gd"
 } ]
 _global_script_class_icons={
+"ActionButton": "",
 "Pipe": "",
 "Player": "",
 "State": "",
@@ -39,7 +45,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Flappy Bird"
-run/main_scene="res://main.tscn"
+run/main_scene="res://title.tscn"
 config/icon="res://icon.png"
 
 [autoload]

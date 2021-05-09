@@ -1,8 +1,10 @@
 extends State
 
-func enter(_params) -> void:
-	get_tree().change_scene('res://main.tscn')
+func enter(params) -> void:
+	.enter(params)
+	SceneStateMachine.goto_scene('res://main.tscn')
 
 func process(delta) -> void:
+	.process(delta)
 	if (Input.is_action_just_released('ui_cancel')):
-		machine.state_name = 'Title'
+		SceneStateMachine.state_name = SceneStateMachine.States.TITLE

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://controls/action_button.gd" type="Script" id=1]
+[ext_resource path="res://fonts/8bitOperator-Regular-16.tres" type="DynamicFont" id=2]
 
 [node name="Title" type="Node2D"]
 
@@ -14,9 +15,10 @@ __meta__ = {
 }
 
 [node name="Start" type="Button" parent="Buttons"]
-margin_top = 122.0
+margin_top = 124.0
 margin_right = 472.0
 margin_bottom = 142.0
+custom_fonts/font = ExtResource( 2 )
 text = "Start"
 script = ExtResource( 1 )
 action = "ui_accept"
@@ -24,7 +26,8 @@ action = "ui_accept"
 [node name="Quit" type="Button" parent="Buttons"]
 margin_top = 146.0
 margin_right = 472.0
-margin_bottom = 166.0
+margin_bottom = 164.0
+custom_fonts/font = ExtResource( 2 )
 text = "Quit"
 script = ExtResource( 1 )
 action = "ui_cancel"

@@ -4,19 +4,22 @@ var _background: Sprite
 var _background_loop_point: int = -413
 var _background_speed: int = 30
 var _ground: Sprite
-var _ground_image = load('res://images/ground.png')
+var _ground_image = load("res://images/ground.png")
 var _ground_speed: int = 60
 var _pipe_at_end: Pipe
 var _pipes: Array = []
 var _pipe_min_height = 32
+var _score_label: Label
 
 func _ready() -> void:
+	GameService.paused = false
+	GameService.score = 0
 	_add_background()
 	_add_player()
 	_add_pipes()
 	_add_ground()
+	_add_score_label()
 	_add_hit_area()
-	GameService.paused = false
 
 func _process(delta) -> void:
 	if (GameService.paused):
@@ -37,7 +40,7 @@ func _process(delta) -> void:
 func _add_background() -> void:
 	_background = Sprite.new()
 	_background.centered = false
-	_background.texture = load('res://images/background.png')
+	_background.texture = load("res://images/background.png")
 	add_child(_background)
 
 func _add_ground() -> void:
@@ -70,19 +73,31 @@ func _add_hit_area() -> void:
 	add_child(hit_area)
 
 func _add_pipes() -> void:
-	var pipe_resource = load('res://pipe.tscn')
+	var pipe_resource = load("res://pipe.tscn")
 	var max_pipes = 5
 	for _i in range(max_pipes):
 		var pipe: Pipe = pipe_resource.instance()
-		pipe.connect('player_hit', self, "_on_player_hit")
+		pipe.connect("player_hit", self, "_on_player_hit")
+		pipe.connect("point_earned", self, "_on_point_earned")
 		_move_pipe_to_end(pipe)
 		_pipes.append(pipe)
 		add_child(pipe)
 
 func _add_player() -> void:
-	var player: Player = load('res://player.tscn').instance()
+	var player: Player = load("res://player.tscn").instance()
 	player.position = GameService.screen_size / 2
 	add_child(player)
+
+func _add_score_label() -> void:
+	_score_label = Label.new()
+	_score_label.margin_left = 5
+	_score_label.margin_top = 5
+	_score_label.add_font_override(
+		"font",
+		load("res://fonts/8bitOperator-Regular-16.tres")
+	)
+	_update_score_label()
+	add_child(_score_label)
 
 func _hit_body_entered(body: Node2D) -> void:
 	if (body is Player):
@@ -90,6 +105,10 @@ func _hit_body_entered(body: Node2D) -> void:
 
 func _on_player_hit() -> void:
 	GameService.paused = true
+
+func _on_point_earned() -> void:
+	GameService.score += 1
+	_update_score_label()
 
 func _move_pipe_to_end(pipe: Pipe) -> void:
 	var screen_size = GameService.screen_size
@@ -109,3 +128,6 @@ func _move_pipe_to_end(pipe: Pipe) -> void:
 		)
 	)
 	_pipe_at_end = pipe
+
+func _update_score_label() -> void:
+	_score_label.text = "Score: " + String(GameService.score)

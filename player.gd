@@ -10,8 +10,8 @@ func _physics_process(delta) -> void:
 	if (GameService.paused):
 		return
 
-	if (Input.is_action_just_pressed('ui_accept')):
-		$AnimationPlayer.play('fly')
+	if (Input.is_action_just_pressed("ui_accept")):
+		$AnimationPlayer.play("fly")
 		_velocity_y = _jump_velocity
 	else:
 		_velocity_y += GameService.gravity * delta

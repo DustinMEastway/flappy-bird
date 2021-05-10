@@ -23,7 +23,7 @@ func _ready():
 	host = get_parent()
 
 func _process(delta):
-	if (state and state.has_method('process')):
+	if (state and state.has_method("process")):
 		state.process(delta)
 
 func _try_enter(enter_params) -> void:
@@ -31,9 +31,9 @@ func _try_enter(enter_params) -> void:
 		state.host = host
 		state.machine = self
 
-		if (state.has_method('enter')):
+		if (state.has_method("enter")):
 			state.enter(enter_params)
 
 func _try_exit() -> void:
-	if (state and state.has_method('exit')):
+	if (state and state.has_method("exit")):
 		state.exit()

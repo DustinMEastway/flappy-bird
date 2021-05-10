@@ -1,8 +1,8 @@
 extends StateMachine
 
 const States = {
-	MAIN = 'Main',
-	TITLE = 'Title'
+	MAIN = "Main",
+	TITLE = "Title"
 }
 
 func goto_scene(new_scene) -> void:
@@ -19,7 +19,7 @@ func _ready() -> void:
 	._ready()
 	for states_name in States:
 		var temp: String
-		var state_path = 'res://state/scene/' + states_name.to_lower() + '.gd'
+		var state_path = "res://state/scene/" + states_name.to_lower() + ".gd"
 		var state = load(state_path).new()
 		state.name = States[states_name]
 		add_child(state)

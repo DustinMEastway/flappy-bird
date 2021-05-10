@@ -24,7 +24,7 @@ func _ready() -> void:
 		state.name = States[states_name]
 		add_child(state)
 
-	set_state_name('Title')
+	set_state_name(States.TITLE)
 
 func _deferred_goto_scene(new_scene: Node2D) -> void:
 	var root = get_tree().get_root()

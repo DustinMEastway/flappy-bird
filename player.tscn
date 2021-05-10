@@ -21,7 +21,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2 ]
 }
 
-[node name="player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D"]
 scale = Vector2( 0.8, 0.8 )
 script = ExtResource( 2 )
 

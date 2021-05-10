@@ -12,10 +12,10 @@ var _pipe_min_height = 32
 
 func _ready() -> void:
 	_add_background()
-	var player: Player = load('res://player.tscn').instance()
-	player.connect('player_hit', self, "_on_player_hit")
-	player.position = GameService.screen_size / 2
-	add_child(player)
+	_add_player()
+	_add_pipes()
+	_add_ground()
+	_add_hit_area()
 	GameService.paused = false
 
 func _process(delta) -> void:
@@ -40,13 +40,34 @@ func _add_background() -> void:
 	_background.texture = load('res://images/background.png')
 	add_child(_background)
 
-	_add_pipes()
-
+func _add_ground() -> void:
 	_ground = Sprite.new()
 	_ground.centered = false
 	_ground.position.y = GameService.screen_size.y - _ground_image.get_size().y
 	_ground.texture = _ground_image
 	add_child(_ground)
+
+func _add_hit_area() -> void:
+	var hit_size = Vector2(
+		GameService.screen_size.x,
+		_ground_image.get_size().y
+	)
+	var hit_area = Area2D.new()
+	hit_area.connect("body_entered", self, "_hit_body_entered")
+	var top = CollisionShape2D.new()
+	top.position = Vector2(GameService.screen_size.x / 2, -hit_size.y)
+	top.scale = hit_size / 10
+	top.shape = RectangleShape2D.new()
+	hit_area.add_child(top)
+	var bottom = CollisionShape2D.new()
+	bottom.position = Vector2(
+		GameService.screen_size.x / 2,
+		GameService.screen_size.y - hit_size.y / 2
+	)
+	bottom.scale = hit_size / 2 / 10
+	bottom.shape = RectangleShape2D.new()
+	hit_area.add_child(bottom)
+	add_child(hit_area)
 
 func _add_pipes() -> void:
 	var pipe_resource = load('res://pipe.tscn')
@@ -57,6 +78,15 @@ func _add_pipes() -> void:
 		_move_pipe_to_end(pipe)
 		_pipes.append(pipe)
 		add_child(pipe)
+
+func _add_player() -> void:
+	var player: Player = load('res://player.tscn').instance()
+	player.position = GameService.screen_size / 2
+	add_child(player)
+
+func _hit_body_entered(body: Node2D) -> void:
+	if (body is Player):
+		_on_player_hit()
 
 func _on_player_hit() -> void:
 	GameService.paused = true
